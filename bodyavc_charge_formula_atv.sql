@@ -94,6 +94,29 @@ is
 		end case;
 			return t_qty*t_price;
 	end;
+
+	function is_ecom_order(t_order_no oehead.order_no%type,
+							t_order_suffix oehead.order_suffix%type) return varchar2
+	is
+		t_stock_area oedetl.pick_stock_area%type;
+		cur_stock_areas is
+		select distinct a.pick_stock_area
+		from oedetl a
+		where order_no = t_order_no
+		and order_suffix = t_order_suffix;
+	begin
+		for s in cur_stock_areas loop
+			select count(*) into t_count
+			from avc_stock_areas
+			where plant_code = g_plant_code
+			and stock_area = s.stock_area
+			and ecom_flag = 'Y';
+			if t_count > 0 then
+				return 'Y';
+			end if;
+		end loop;
+		return ''
+	end is_ecom_order
 end procavc_charge_formula_atv;
 /
 show err
