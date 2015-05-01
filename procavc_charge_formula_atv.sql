@@ -11,7 +11,7 @@ create or replace package procavc_charge_formula_atv 	is
 								t_qty in number,								
 								t_type in varchar2 :='MOV') return number;
 	function is_ecom_order(t_order_no oehead.order_no%type,
-							t_order_suffix oehead.order_suffix%type) return varchar2
+							t_order_suffix oehead.order_suffix%type) return varchar2;
 
 end procavc_charge_formula_atv;
 /

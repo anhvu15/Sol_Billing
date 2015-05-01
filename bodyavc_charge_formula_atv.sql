@@ -98,9 +98,9 @@ is
 	function is_ecom_order(t_order_no oehead.order_no%type,
 							t_order_suffix oehead.order_suffix%type) return varchar2
 	is
-		t_stock_area oedetl.pick_stock_area%type;
-		cur_stock_areas is
-		select distinct a.pick_stock_area
+		t_count  number;
+		cursor cur_stock_areas is
+		select distinct a.pick_stock_area stock_area
 		from oedetl a
 		where order_no = t_order_no
 		and order_suffix = t_order_suffix;
@@ -115,8 +115,8 @@ is
 				return 'Y';
 			end if;
 		end loop;
-		return ''
-	end is_ecom_order
+		return 'N';
+	end is_ecom_order;
 end procavc_charge_formula_atv;
 /
 show err
